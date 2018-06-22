@@ -269,7 +269,7 @@ struct workqueue_struct {
 #ifdef CONFIG_WQ_POWER_EFFICIENT_DEFAULT
 static bool wq_power_efficient = true;
 #else
-static bool wq_power_efficient = false;
+static bool wq_power_efficient;
 #endif
 
 module_param_named(power_efficient, wq_power_efficient, bool, 0644);
