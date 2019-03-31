@@ -430,6 +430,7 @@ config INET_DIAG_DESTROY
 
 menuconfig TCP_CONG_ADVANCED
 	bool "TCP: advanced congestion control"
+        default y
 	---help---
 	  Support for selection of various TCP congestion control
 	  modules.
@@ -465,7 +466,7 @@ config TCP_CONG_CUBIC
 
 config TCP_CONG_WESTWOOD
 	tristate "TCP Westwood+"
-	default m
+	default y
 	---help---
 	TCP Westwood+ is a sender-side only modification of the TCP Reno
 	protocol stack that optimizes the performance of TCP congestion
