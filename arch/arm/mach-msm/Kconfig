@@ -4696,7 +4696,7 @@ config MSM_CPU_PWRCTL
 
 config MSM_LIMITER
 	bool "Add msm limiter"
-	default n
+	default y
 	help
 	  Add or remove msm limiter.
 
@@ -4893,7 +4893,7 @@ config KRAIT_REGULATOR
 	 this option to support such configurations.
 
 config HAS_MACH_MEMUTILS
-        default n
+        default y
         bool "Motorola MSM memcpy enhancements"
         help
         Faster memcpy performance for Krait

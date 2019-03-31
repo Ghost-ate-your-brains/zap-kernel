@@ -9,7 +9,7 @@ menuconfig MSM_VIDC_V4L2
 config MSM_VIDC_IGNORE_YUV
 	bool "Ignore V4L2_MSM_BUF_FLAG_YUV_601_709_CLAMP flag"
 	depends on MSM_VIDC_V4L2
-	default n
+	default y
 	help
 	  Say Y here to ignore the V4L2_MSM_BUF_FLAG_YUV_601_709_CLAMP
 	  flag sent by Note 5 CameraService. This prevents the colorspace
