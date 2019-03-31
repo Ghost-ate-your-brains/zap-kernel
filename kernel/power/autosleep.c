@@ -11,7 +11,7 @@
 #include <linux/pm_wakeup.h>
 
 #ifdef CONFIG_POWERSUSPEND
-	#include <linux/powersuspend.h>
+#include <linux/powersuspend.h>
 #endif
 
 #include "power.h"
