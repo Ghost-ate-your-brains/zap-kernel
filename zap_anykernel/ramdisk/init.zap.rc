@@ -124,4 +124,8 @@ on property:sys.boot_completed=1
 
 # Setup Hotplug
   write /sys/kernel/msm_mpdecision/conf/enabled 0
+  write /sys/kernel/thunderplug/hotplug_enabled/enabled 0
+  write /sys/module/msm_hotplug/msm_enabled 0
+  write /sys/kernel/intelli_plug/intelli_plug_active 1
+  write /sys/kernel/intelli_plug/debug_intelli_plug 0
 
