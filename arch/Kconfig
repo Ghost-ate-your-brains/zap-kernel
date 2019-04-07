@@ -150,7 +150,7 @@ config USE_GENERIC_SMP_HELPERS
 	bool
 
 config GENERIC_SMP_IDLE_THREAD
-       bool
+       def_bool y
 
 config HAVE_REGS_AND_STACK_ACCESS_API
 	bool
