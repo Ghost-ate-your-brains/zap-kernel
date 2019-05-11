@@ -44,6 +44,9 @@ insert_line init.qcom.rc "init.zap.rc" after "import init.target.rc" "import ini
 backup_file init.target.rc;
 replace_section init.target.rc "service mpdecision" " " "#service mpdecision /system/bin/mpdecision --avg_comp\n# class main\n# user root\n# group root readproc\n# disabled";
 
+# permissive mode
+patch_cmdline "androidboot.selinux=permissive" "androidboot.selinux=permissive"
+
 # end ramdisk changes
 
 write_boot;
