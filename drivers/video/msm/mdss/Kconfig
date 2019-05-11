@@ -35,6 +35,13 @@ config FB_MSM_MDSS_KCAL_CTRL
 	  Enable sysfs for post-processing control of mdss-mdp5 display
 	  controllers in MDSS.
 
+config KLAPSE
+    bool CONFIG_KLAPSE
+    depends on FB_MSM_MDSS
+    default y
+    help
+        A simple rgb dynamic lapsing module similar to LineageOS' livedisplay
+
 config BACKLIGHT_KTD2801
 	bool "Backlight IC KTD2801"
 	default n
