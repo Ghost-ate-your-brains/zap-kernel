@@ -30,9 +30,6 @@
 #include <mach/socinfo.h>
 #include <linux/mman.h>
 #include <linux/sort.h>
-#ifdef CONFIG_HIGHPTE
-#include <linux/highmem.h>
-#endif
 #include <asm/cacheflush.h>
 
 #include "kgsl.h"
