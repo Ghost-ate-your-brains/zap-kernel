@@ -4933,3 +4933,12 @@ config KERNEL_TEXT_MPU_PROT
 config CPU_VOLTAGE_TABLE
 	default y
 	bool "Enable CPU voltage modification"
+
+config AUTOSMP
+	bool "AutoSMP Hotplug"
+	depends on SMP && HOTPLUG_CPU
+        default y
+	help
+	  Automatically hotplugs the multiple CPU cores based on
+	  CPU load and suspend state.
+

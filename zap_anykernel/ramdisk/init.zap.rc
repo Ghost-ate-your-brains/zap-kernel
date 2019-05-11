@@ -81,3 +81,5 @@ on property:sys.boot_completed=1
 # Setup Hotplug
   write /sys/kernel/msm_mpdecision/conf/enabled 0
 
+# AutoSMP Settings
+  write /sys/kernel/autosmp/conf/min_boost_freq 268800
