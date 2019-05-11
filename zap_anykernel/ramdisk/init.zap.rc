@@ -62,7 +62,7 @@ on property:sys.boot_completed=1
   write /sys/module/adreno_idler/parameters/adreno_idler_idleworkload 10000
 
 # Set Simple GPU Algorithm
-  write /sys/module/simple_gpu_algorithm/parameters/simple_gpu_activate 1
+  write /sys/module/simple_gpu_algorithm/parameters/simple_gpu_activate 0
   write /sys/module/simple_gpu_algorithm/parameters/simple_gpu_debug 0
   write /sys/module/simple_gpu_algorithm/parameters/simple_ramp_threshold 10000
   write /sys/module/simple_gpu_algorithm/parameters/simple_laziness 1
@@ -78,41 +78,6 @@ on property:sys.boot_completed=1
   chmod 777 /proc/sys/net/ipv4/tcp_congestion_control
   write /proc/sys/net/ipv4/tcp_congestion_control "westwood"
     
-# Cpusets
-  write /dev/cpuset/top-app/cpus 0-3
-  write /dev/cpuset/foreground/boost/cpus 0-2
-  write /dev/cpuset/foreground/cpus 0-2
-  write /dev/cpuset/background/cpus 0
-  write /dev/cpuset/system-background/cpus 0-2
-
-# Add a cpuset for the mm-qcamera-daemon
-# Use all cores for camera
-  mkdir /dev/cpuset/mm-qcamera-daemon
-  write /dev/cpuset/mm-qcamera-daemon/cpus 0-3
-  write /dev/cpuset/mm-qcamera-daemon/mems 0
-  chown system system /dev/cpuset/mm-qcamera-daemon
-  chown system system /dev/cpuset/mm-qcamera-daemon/tasks
-  chmod 0664 /dev/cpuset/mm-qcamera daemon/tasks
-
-# Cpuctl
-  write /sys/devices/system/cpu/cpuctl 1
-  write /dev/cpuctl/cpu.shares 1024
-  write /dev/cpuctl/cpu.rt_runtime_us 800000
-  write /dev/cpuctl/cpu.rt_period_us 1000000
-  write /dev/cpuctl/cpu.notify_on_migrate 1
-  write /dev/cpuctl/notify_on_release 1
-  write /dev/cpuctl/bg_non_interactive/cpu.shares 52
-  write /dev/cpuctl/bg_non_interactive/cpu.rt_runtime_us 700000
-  write /dev/cpuctl/bg_non_interactive/cpu.rt_period_us 1000000
-  write /dev/cpuctl/bg_non_interactive/cpu.notify_on_migrate 1
-  write /dev/cpuctl/bg_non_interactive/notify_on_release 1
-
-# Scheduler tuning
-  write /dev/stune/foreground/schedtune.prefer_idle 1
-  write /dev/stune/top-app/schedtune.boost 10
-  write /dev/stune/top-app/schedtune.prefer_idle 1
-  write /proc/sys/kernel/sched_wake_to_idle 0
-
 # Setup Hotplug
   write /sys/kernel/msm_mpdecision/conf/enabled 0
 
