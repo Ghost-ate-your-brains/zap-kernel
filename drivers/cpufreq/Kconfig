@@ -389,8 +389,6 @@ config CPU_FREQ_GOV_NIGHTMARE
 
 config CPU_FREQ_GOV_DARKNESS
 	tristate "'darkness' cpufreq policy governor"
-        default y
-        help
 
 config CPU_FREQ_GOV_LIONHEART
 	tristate "'lionheart' cpufreq governor"
