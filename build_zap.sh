@@ -14,7 +14,7 @@ KERNEL_NAME="Zap-kernel"
 
 KERNEL_VARIANT="hlte"
 
-KERNEL_VERSION="1.0"
+KERNEL_VERSION="2.0"
 
 KERNEL_DATE="$(date +"%Y%m%d")"
 

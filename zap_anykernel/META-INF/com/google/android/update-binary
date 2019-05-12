@@ -78,7 +78,9 @@ if [ -f banner ]; then
   ui_print " ";
 fi;
 
+ui_print "***********************************";
 ui_print "$(file_getprop anykernel.sh kernel.string)";
+ui_print "***********************************";
 if [ -f version ]; then
   ui_print " ";
   while IFS='' read -r line || $bb [[ -n "$line" ]]; do
@@ -86,11 +88,9 @@ if [ -f version ]; then
   done < version;
   ui_print " ";
 fi;
-ui_print " ";
-ui_print " Based on Synergy Kernel ";
-ui_print " for: AOSP/LOS based Nougat ROMs";
-ui_print " Zap version: 1.0";
-ui_print " Supported: HLTE, HLTECHN, HLTETMO ";
+ui_print "- for: AOSP/LOS based Nougat ROMs";
+ui_print "- Zap version: 2.0";
+ui_print "- Supported: HLTE, HLTECHN, HLTETMO ";
 
 unmount_all;
 if [ ! "$(is_mounted /system)" ]; then
@@ -135,7 +135,7 @@ if [ "$(file_getprop anykernel.sh do.devicecheck)" == 1 ]; then
   done;
   ui_print " ";
   if [ ! "$match" ]; then
-    abort "Unsupported device. Aborting...";
+    abort "- Unsupported device. Aborting...";
   fi;
 fi;
 
@@ -162,16 +162,16 @@ if [ "$supported_ver" ]; then
     ui_print " ";
   else
     ui_print " ";
-    abort "Unsupported Android version. Aborting...";
+    abort "- Unsupported Android version. Aborting...";
   fi;
 fi;
 
-ui_print "Installing...";
+ui_print "- Installing...";
 for i in $($bb --list); do
   $bb ln -s $bb bin/$i;
 done;
 if [ $? != 0 -o -z "$(ls bin)" ]; then
-  abort "Recovery busybox setup failed. Aborting...";
+  abort "- Recovery busybox setup failed. Aborting...";
 fi;
 PATH="/tmp/anykernel/bin:$PATH" $bb ash anykernel.sh $2;
 if [ $? != 0 ]; then
