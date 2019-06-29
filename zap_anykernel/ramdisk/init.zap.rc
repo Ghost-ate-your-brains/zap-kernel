@@ -15,10 +15,6 @@
 # GNU General Public License for more details.
 #
 
-on early-init
-    write /sys/block/mmcblk0/queue/read_ahead_kb 2048
-    setprop sys.io.scheduler "bfq"
-
 on property:sys.boot_completed=1
     stop mpdecision
 
@@ -62,16 +58,6 @@ on property:sys.boot_completed=1
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 268800
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor interactive
 
-    # Interactive tweaks
-    write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay "20000 1190400:60000 1728000:74000 1958400:82000 2265600:120000"
-    write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 99
-    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1190400
-    write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 0
-    write /sys/devices/system/cpu/cpufreq/interactive/target_loads "98 268800:28 300000:12 422400:34 652800:41 729600:12 883200:52 960000:9 1036800:8 1190400:73 1267200:6 1497600:87 1574400:5 1728000:89 1958400:91 2265600:94"
-    write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 40000
-    write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 40000
-    write /sys/devices/system/cpu/cpufreq/interactive/timer_slack 80000
-
     # CPU Input Boost
     write /sys/kernel/cpu_input_boost/ib_freqs "1190400 1497600"
     write /sys/kernel/cpu_input_boost/ib_duration_ms 1400
@@ -95,14 +81,6 @@ on property:sys.boot_completed=1
 
     # Set Multi-Core Power Saving
     write /sys/devices/system/cpu/sched_mc_power_savings 0
-
-    # Setup Hotplug
-    write /sys/kernel/msm_mpdecision/conf/enabled 0
-    write /sys/kernel/thunderplug/hotplug_enabled/enabled 0
-    write /sys/kernel/msm_hotplug/msm_enabled 0
-    write /sys/module/msm_hotplug/msm_enabled 0
-    write /sys/kernel/intelli_plug/intelli_plug_active 1
-    write /sys/kernel/intelli_plug/debug_intelli_plug 0
 
     # Set I/O Scheduler
     write /sys/block/mmcblk1/queue/read_ahead_kb 1024
