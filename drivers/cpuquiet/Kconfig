@@ -2,6 +2,7 @@ menu "CPUQUIET Framework"
 
 config CPUQUIET_FRAMEWORK
 	bool "Cpuquiet framework"
+        default y
 	help
 	  Cpuquiet implements pluggable policies for forcing cpu cores into a
 	  quiescent state. Appropriate policies will save power without hurting
@@ -11,6 +12,7 @@ if CPUQUIET_FRAMEWORK
 
 choice
 	prompt "Default CPUQuiet governor"
+        default CPUQUIET_DEFAULT_GOV_BALANCED
 	help
 	  This option sets which CPUQuiet governor shall be loaded at
 	  startup. If in doubt, select 'balanced'
@@ -50,21 +52,25 @@ endchoice
 config CPUQUIET_GOVERNOR_BALANCED
 	bool "balanced"
 	depends on CPU_FREQ
+        default y
 	help
 	  Add the CPUQuiet governor 'balanced'
 
 config CPUQUIET_GOVERNOR_RUNNABLE
 	bool "runnable"
+        default y
 	help
 	  Add the CPUQuiet governor 'runnable'
 
 config CPUQUIET_GOVERNOR_RQ_STATS
 	bool "rq_stats"
+        default y
 	help
 	  Add the CPUQuiet governor 'rq_stats'
 
 config CPUQUIET_GOVERNOR_LOAD_STATS
 	bool "load_stats"
+        default y
 	help
 	  Add the CPUQuiet governor 'load_stats'
 
