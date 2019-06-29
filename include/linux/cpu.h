@@ -274,9 +274,6 @@ void idle_notifier_register(struct notifier_block *n);
 void idle_notifier_unregister(struct notifier_block *n);
 void idle_notifier_call_chain(unsigned long val);
 
-/* warning shut if msm thermal holding cores off on high temp. */
-extern bool core_control;
-
 extern bool check_cpuboost(int cpu);
 
 #endif /* _LINUX_CPU_H_ */
