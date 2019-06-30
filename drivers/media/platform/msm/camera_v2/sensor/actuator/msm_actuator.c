@@ -1019,12 +1019,17 @@ static int32_t msm_actuator_config(struct msm_actuator_ctrl_t *a_ctrl,
 		if (a_ctrl->func_tbl &&
 			a_ctrl->func_tbl->actuator_set_default_focus)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rc = a_ctrl->func_tbl->actuator_set_default_focus(a_ctrl,
 								  &cdata->cfg.move);
 =======
 			rc = a_ctrl->func_tbl->actuator_set_default_focus(a_ctrl,
 									  &cdata->cfg.move);
 >>>>>>> edfd9dd9be89d15c34f653363a9a3c9108146ca0
+=======
+			rc = a_ctrl->func_tbl->actuator_set_default_focus(a_ctrl,
+									  &cdata->cfg.move);
+>>>>>>> c0fc7f05123abb7cbdb8cecdf60a65bf5862d3a2
 		if (rc < 0)
 			pr_err("move focus failed %d\n", rc);
 		break;
@@ -1033,28 +1038,39 @@ static int32_t msm_actuator_config(struct msm_actuator_ctrl_t *a_ctrl,
 		if (a_ctrl->func_tbl &&
 			a_ctrl->func_tbl->actuator_move_focus)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rc = a_ctrl->func_tbl->actuator_move_focus(a_ctrl,
 							   &cdata->cfg.move);
 =======
 			rc = a_ctrl->func_tbl->actuator_move_focus(a_ctrl,
 								   &cdata->cfg.move);
 >>>>>>> edfd9dd9be89d15c34f653363a9a3c9108146ca0
+=======
+			rc = a_ctrl->func_tbl->actuator_move_focus(a_ctrl,
+								   &cdata->cfg.move);
+>>>>>>> c0fc7f05123abb7cbdb8cecdf60a65bf5862d3a2
 		if (rc < 0)
 			pr_err("move focus failed %d\n", rc);
 		break;
 
 	case CFG_SET_POSITION:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (a_ctrl->func_tbl &&
 			a_ctrl->func_tbl->actuator_set_position)
 		rc = a_ctrl->func_tbl->actuator_set_position(a_ctrl,
 							     &cdata->cfg.setpos);
 =======
+=======
+>>>>>>> c0fc7f05123abb7cbdb8cecdf60a65bf5862d3a2
 		if (a_ctrl->func_tbl &&
 			a_ctrl->func_tbl->actuator_set_position)
 			rc = a_ctrl->func_tbl->actuator_set_position(a_ctrl,
 								     &cdata->cfg.setpos);
+<<<<<<< HEAD
 >>>>>>> edfd9dd9be89d15c34f653363a9a3c9108146ca0
+=======
+>>>>>>> c0fc7f05123abb7cbdb8cecdf60a65bf5862d3a2
 		if (rc < 0)
 			pr_err("actuator_set_position failed %d\n", rc);
 		break;
