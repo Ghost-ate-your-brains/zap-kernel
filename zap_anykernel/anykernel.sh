@@ -50,8 +50,8 @@ insert_line init.qcom.rc "init.zap.rc" after "import init.target.rc" "import ini
 backup_file init.target.rc;
 remove_line init.qcom.rc "write /sys/module/msm_thermal/core_control/enabled 0";
 remove_line init.qcom.rc "write /sys/module/msm_thermal/core_control/enabled 1";
-replace_section init.target.rc "service mpdecision" " " "#service mpdecision /system/bin/mpdecision --avg_comp\n#   class main\n#   user root\n#   group root readproc\n#   disabled";
-replace_section init.target.rc "service thermal-engine" " " "#service thermal-engine /system/bin/thermal-engine\n#   class main\n#   user root\n#   socket thermal-send-client stream 0666 system system\n#   socket thermal-recv-client stream 0660 system system\n#   socket thermal-recv-passive-client stream 0666 system system\n#   group root";
+replace_section init.target.rc "service mpdecision" " " "#service mpdecision /vendor/bin/mpdecision --avg_comp\n#   class main\n#   user root\n#   group root readproc\n#   disabled";
+replace_section init.target.rc "service thermal-engine" " " "#service thermal-engine /vendor/bin/thermal-engine\n#   class main\n#   user root\n#   socket thermal-send-client stream 0666 system system\n#   socket thermal-recv-client stream 0660 system system\n#   socket thermal-recv-passive-client stream 0666 system system\n#   group root";
 
 # Permissive Mode
 patch_cmdline "androidboot.selinux=permissive" "androidboot.selinux=permissive"
