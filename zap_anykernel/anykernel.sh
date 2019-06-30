@@ -5,7 +5,7 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=*  Zap-Kernel For Nougat ROMs
+kernel.string=*  Zap-Kernel For OREO and PIE ROMs
 do.devicecheck=1
 do.modules=0
 do.cleanup=1
@@ -13,9 +13,13 @@ do.cleanuponabort=0
 device.name1=hlte
 device.name2=hltecan
 device.name3=hltechn
-device.name4=hltetmo
-device.name5=hltespr
-supported.versions=7.1.2
+device.name4=hltedcm
+device.name5=hltekor
+device.name6=hlteskt
+device.name7=hltespr
+device.name8=hltetmo
+device.name9=hltexx
+supported.versions=8.1.0, 9
 '; } # end properties
 
 # shell variables
