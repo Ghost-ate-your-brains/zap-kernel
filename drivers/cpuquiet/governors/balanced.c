@@ -27,7 +27,10 @@
 #include <linux/sched.h>
 #include <linux/tick.h>
 #include <asm/cputime.h>
-#include "../cpuquiet.h"
+
+// from cpuquiet.c
+extern unsigned int cpq_max_cpus(void);
+extern unsigned int cpq_min_cpus(void);
 
 #define CPUNAMELEN 8
 

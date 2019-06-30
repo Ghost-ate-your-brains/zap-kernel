@@ -25,6 +25,7 @@
 #include <linux/slab.h>
 #include <linux/cpu.h>
 #include <linux/cpuquiet.h>
+#include <linux/earlysuspend.h>
 #include <linux/rq_stats.h>
 
 static struct work_struct minmax_work;
@@ -36,12 +37,15 @@ static bool manual_hotplug = false;
 // core 0 is always active
 unsigned int cpu_core_state[3] = {0, 0, 0};
 		
-unsigned int min_cpus = 2;
-unsigned int max_cpus = CONFIG_NR_CPUS;
+static unsigned int min_cpus = 1;
+static unsigned int max_cpus = CONFIG_NR_CPUS;
 
 #define DEFAULT_SCREEN_OFF_CPU_CAP 2
-unsigned int screen_off_max_cpus = DEFAULT_SCREEN_OFF_CPU_CAP;
-bool screen_off_cap = false;
+static unsigned int screen_off_max_cpus = DEFAULT_SCREEN_OFF_CPU_CAP;
+static bool screen_off_cap = false;
+#ifdef CONFIG_HAS_EARLYSUSPEND
+struct early_suspend cpuquiet_early_suspender;
+#endif
 static bool screen_off_cap_active = false;
 static bool is_suspended = false;
 
@@ -50,7 +54,7 @@ static bool log_hotplugging = false;
 	if (log_hotplugging) pr_info("[CPUQUIET]: " msg); \
 	} while (0)
 
-unsigned int num_cpu_check(unsigned int num)
+static inline unsigned int num_cpu_check(unsigned int num)
 {
 	if (num > CONFIG_NR_CPUS)
 		return CONFIG_NR_CPUS;
@@ -64,14 +68,14 @@ bool cpq_is_suspended(void)
     return is_suspended;
 }
 
-unsigned int cpq_max_cpus(void)
+unsigned inline int cpq_max_cpus(void)
 {
     if (screen_off_cap && screen_off_cap_active)
 	    return min(num_cpu_check(max_cpus), num_cpu_check(screen_off_max_cpus));
 	return num_cpu_check(max_cpus);
 }
 
-unsigned int cpq_min_cpus(void)
+unsigned inline int cpq_min_cpus(void)
 {
 	return num_cpu_check(min_cpus);
 }
@@ -515,6 +519,28 @@ static int cpq_auto_sysfs(void)
 	return err;
 }
 
+#ifdef CONFIG_HAS_EARLYSUSPEND
+static void cpuquiet_early_suspend(struct early_suspend *h)
+{
+	is_suspended = true;
+	if (screen_off_cap){
+		pr_info(CPUQUIET_TAG "%s: limit to %d cores\n", __func__, screen_off_max_cpus);
+		screen_off_cap_active = true;
+		max_cpus_change();
+	}
+}
+
+static void cpuquiet_late_resume(struct early_suspend *h)
+{
+	is_suspended = false;	
+	if (screen_off_cap){
+		pr_info(CPUQUIET_TAG "%s: release limit to %d cores\n", __func__, screen_off_max_cpus);
+		screen_off_cap_active = false;
+		max_cpus_change();
+	}
+}
+#endif
+
 int __init cpq_auto_hotplug_init(void)
 {
 	int err;
@@ -533,6 +559,13 @@ int __init cpq_auto_hotplug_init(void)
 	if (err)
 		goto error;
 
+#ifdef CONFIG_HAS_EARLYSUSPEND
+	// will cap core num on screen off
+	cpuquiet_early_suspender.suspend = cpuquiet_early_suspend;
+	cpuquiet_early_suspender.resume = cpuquiet_late_resume;
+	cpuquiet_early_suspender.level = EARLY_SUSPEND_LEVEL_DISABLE_FB + 100;
+	register_early_suspend(&cpuquiet_early_suspender);
+#endif
 	
 	enabled = true;
 	// disable mpdecision load calc - just burning cpu cycles
@@ -548,6 +581,9 @@ error:
 
 void __init cpq_auto_hotplug_exit(void)
 {
+#ifdef CONFIG_HAS_EARLYSUSPEND
+	unregister_early_suspend(&cpuquiet_early_suspender);
+#endif
 	cpuquiet_unregister_driver(&cpuquiet_driver);
 	kobject_put(auto_sysfs_kobject);
 }
