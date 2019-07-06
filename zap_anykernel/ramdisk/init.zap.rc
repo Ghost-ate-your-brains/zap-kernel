@@ -1,7 +1,7 @@
 #
 # Copyright (C) 2018-2019 The Lolz Kernel Project. All rights reserved.
 #
-# LolZ-Kernel Configuration
+# LolZ-Kernel Configuration and Synergy Tweaks
 # Modified for ZAP KERNEL
 # Custom Kernel for HLTEXX Nougat ROMs
 # Author: Joshua Primero <jprimero155@gmail.com>
@@ -17,45 +17,74 @@
 
 on property:sys.boot_completed=1
     stop mpdecision
+    
+    # Disable Kernel Panic
+    write /proc/sys/vm/panic_on_oom 0
+    write /proc/sys/kernel/panic 0
+    write /proc/sys/kernel/panic_on_oops 0
 
-    # CPUFREQ Settings   
-    chown system.system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
-    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
-    chown system.system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-    chown system.system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-    chown system.system /sys/devices/system/cpu/cpu0/online
-    chmod 0664 /sys/devices/system/cpu/cpu0/online
-    chown system.system /sys/devices/system/cpu/cpu1/online  
-    chmod 0664 /sys/devices/system/cpu/cpu1/online
-    chown system.system /sys/devices/system/cpu/cpu2/online  
-    chmod 0664 /sys/devices/system/cpu/cpu2/online
-    chown system.system /sys/devices/system/cpu/cpu3/online  
-    chmod 0664 /sys/devices/system/cpu/cpu3/online
+    # Some tweaks
+    setprop dalvik.vm.execution-mode int:fast
+    setprop dalvik.vm.dex2oat-threads 4
+    setprop dalvik.vm.boot-dex2oat-threads 4
+    setprop dalvik.vm.image-dex2oat-threads 4
+    setprop logcat.live disable
+    setprop pm.sleep_mode 1
+    setprop net.ipv4.route.flush 1
+    setprop net.ipv4.tcp_ecn 0
+    setprop net.ipv4.tcp_no_metrics_save 1
+    setprop net.ipv4.tcp_rfc1337 1
+    setprop net.ipv4.tcp_sack 0
+    setprop net.ipv4.tcp_timestamps 0
+    setprop net.ipv4.tcp_window_scaling 0
+    setprop net.core.wmem_default 262144
+    setprop net.core.wmem_max 4194304
+    setprop net.core.rmem_default 262144
+    setprop net.core.rmem_max 4194304
+    setprop net.ipv4.tcp_rmem "65535 131072 4194304"
+    setprop net.ipv4.tcp_wmem "65535 131072 194304"
+    setprop net.ipv4.tcp_moderate_rcvbuf 1
+    setprop ro.telephony.call_ring.delay 0
+    setprop ro.qualcomm.cabl 1
+    setprop ro.ril.power_collapse 1
 
-    # CPU0
-    write /sys/devices/system/cpu/cpu0/online 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 2265600
+    # Define TCP buffer sizes for various networks
+    # ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
+    setprop net.tcp.buffersize.lte 524288,1048576,2560000,524288,1048576,2560000
+    setprop net.tcp.buffersize.wifi 524288,1048576,4525824,524288,1048576,4525824
+    setprop net.tcp.buffersize.default 4096,87380,110208,4096,16384,110208
+    setprop net.tcp.buffersize.umts 4094,87380,110208,4096,16384,110208
+    setprop net.tcp.buffersize.hspa 4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.hsupa 4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.hsdpa 4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.hspap 4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.edge 4093,26280,35040,4096,16384,35040
+    setprop net.tcp.buffersize.gprs 4092,8760,11680,4096,8760,11680
+    setprop net.tcp.buffersize.evdo 4094,87380,262144,4096,16384,262144
+
+    # Set CPU Core
+    chown root system /sys/devices/system/cpu/cpu1/online
+    chown root system /sys/devices/system/cpu/cpu2/online
+    chown root system /sys/devices/system/cpu/cpu3/online
+
+    # Set CPU Frequency
+    # Core 1
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 268800
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor alucard
-
-    # CPU1
-    write /sys/devices/system/cpu/cpu1/online 1
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 2265600
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 2265600
+    # Core 2
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 268800
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor alucard
-
-    # CPU2
-    write /sys/devices/system/cpu/cpu2/online 1
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 2265600
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 2265600
+    # Core 3
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 268800
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor alucard
-
-    # CPU3
-    write /sys/devices/system/cpu/cpu3/online 1
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 2265600
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 2265600
+    # Core 4
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 268800
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 2265600
+
+    # Set CPU Governor
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor alucard
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor alucard
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor alucard
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor alucard
 
     # CPU Input Boost
@@ -78,6 +107,40 @@ on property:sys.boot_completed=1
     write /sys/module/adreno_idler/parameters/adreno_idler_downdifferential 30
     write /sys/module/adreno_idler/parameters/adreno_idler_idlewait 15
     write /sys/module/adreno_idler/parameters/adreno_idler_idleworkload 10000
+
+    # CPUsets
+    write /dev/cpuset/top-app/cpus 0-3
+    write /dev/cpuset/foreground/boost/cpus 0-2
+    write /dev/cpuset/foreground/cpus 0-2
+    write /dev/cpuset/background/cpus 0
+    write /dev/cpuset/system-background/cpus 0-2
+
+    # Add a CPUset for the mm-qcamera-daemon
+    # We want all cores for camera
+    mkdir /dev/cpuset/mm-qcamera-daemon
+    write /dev/cpuset/mm-qcamera-daemon/cpus 0-3
+    write /dev/cpuset/mm-qcamera-daemon/mems 0
+    chown system system /dev/cpuset/mm-qcamera-daemon
+    chown system system /dev/cpuset/mm-qcamera-daemon/tasks
+    chmod 0664 /dev/cpuset/mm-qcamera daemon/tasks
+
+    # CPUctl
+    write /sys/devices/system/cpu/cpuctl 1
+    write /dev/cpuctl/cpu.shares 1024
+    write /dev/cpuctl/cpu.rt_runtime_us 800000
+    write /dev/cpuctl/cpu.rt_period_us 1000000
+    write /dev/cpuctl/cpu.notify_on_migrate 1
+    write /dev/cpuctl/notify_on_release 1
+    write /dev/cpuctl/bg_non_interactive/cpu.shares 52
+    write /dev/cpuctl/bg_non_interactive/cpu.rt_runtime_us 700000
+    write /dev/cpuctl/bg_non_interactive/cpu.rt_period_us 1000000
+    write /dev/cpuctl/bg_non_interactive/cpu.notify_on_migrate 1
+    write /dev/cpuctl/bg_non_interactive/notify_on_release 1
+
+    # Scheduler Tuning
+    write /dev/stune/foreground/schedtune.prefer_idle 1
+    write /dev/stune/top-app/schedtune.boost 10
+    write /dev/stune/top-app/schedtune.prefer_idle 1
 
     # Set Multi-Core Power Saving (this is broken forever so disable it)
     write /sys/devices/system/cpu/sched_mc_power_savings 0
