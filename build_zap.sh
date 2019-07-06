@@ -45,8 +45,8 @@ if [ -z "$NUM_CPUS" ]; then
 	NUM_CPUS=`grep -c ^processor /proc/cpuinfo`
 fi
 
-if [ "hltespr" == "$KERNEL_VARIANT" ]; then
-	KERNEL_DEFCONFIG="lineage_hlte_bcm2079x_defconfig"
+if [ "hltekor" == "$KERNEL_VARIANT" ]; then
+	KERNEL_DEFCONFIG="lineage_hltekor_defconfig"
 elif [ "hltetmo" == "$KERNEL_VARIANT" ]; then
 	KERNEL_DEFCONFIG="lineage_hlte_pn547_defconfig"
 elif [ "hltechn" == "$KERNEL_VARIANT" ]; then

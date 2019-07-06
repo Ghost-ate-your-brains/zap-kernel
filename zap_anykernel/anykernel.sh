@@ -13,8 +13,11 @@ do.cleanuponabort=0
 device.name1=hlte
 device.name2=hltecan
 device.name3=hltechn
-device.name4=hltetmo
-device.name5=hltespr
+device.name4=hltekor
+device.name5=hltektt
+device.name6=hltetmo
+device.name7=hlteskt
+device.name8=hltespr
 supported.versions=7.1.2
 '; } # end properties
 
